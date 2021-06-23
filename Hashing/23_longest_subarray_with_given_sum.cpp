@@ -26,27 +26,30 @@ using namespace std;
 
 vector<int> subarrayGIVENsum(vector <int> array,int sum)
 {
-   unordered_map<int,int> mp;
-   int max_length = 0,current_sum = 0;
-   for(int i = 0; i < array.size(); i++)
+    unordered_map<int, int> mp;
+    int max_sum = 0,prefix_sum = 0;
+
+    for (int i = 0; i < array.size(); i++)
     {
-        current_sum += array[i];
-        if(current_sum == sum)
+        prefix_sum += array[i];
+
+        if(prefix_sum == sum)
         {
-            max_length = i + 1;
-        }
-        if(mp.find(current_sum) == mp.end())
-        {
-            mp.insert({current_sum,i});      
+            max_sum = i + 1;
         }
 
-        if(mp.find(current_sum - sum) != mp.end())
+        if(mp.find(prefix_sum) == mp.end())
         {
-            max_length = max(max_length,i - mp[current_sum - sum]);
+            mp.insert({prefix_sum,i});
+        }
+
+        if(mp.find(prefix_sum - sum) != mp.end())
+        {
+            max_sum = max(max_sum,i -mp[prefix_sum - sum] );
         }
     }
-    cout << max_length;
-    return { };
+    cout << max_sum;
+        return {};
 }
 
 
@@ -62,7 +65,7 @@ int32_t main()
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL) ; cout.tie(NULL) ;
 
-	vector<int> array =  {8, 8, 1, 1, 5, 6, 6, 2, 2 };
+	vector<int> array =  {8, 8, 1, 1, 5, -6, 6, 2, 2 };
     int sum = 4;
 	subarrayGIVENsum (array,sum);
 	return 0 ;
